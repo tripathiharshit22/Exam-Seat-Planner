@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import AddClassroom from './pages/AddClassroom'
 import ClassroomList from './pages/ClassroomList'
+import AllocateExam from './pages/AllocateExam'
 
 const tabs = [
     { id: 'list', label: 'Classrooms' },
     { id: 'add', label: 'Add Classroom' },
+    { id: 'allocate', label: 'Allocate Exam' },
 ]
 
 function App() {
@@ -23,8 +25,8 @@ function App() {
                             key={tab.id}
                             onClick={() => setActiveTab(tab.id)}
                             className={`px-4 py-2 text-sm font-medium border-b-2 -mb-px ${activeTab === tab.id
-                                    ? 'border-blue-600 text-blue-600'
-                                    : 'border-transparent text-gray-500 hover:text-gray-700'
+                                ? 'border-blue-600 text-blue-600'
+                                : 'border-transparent text-gray-500 hover:text-gray-700'
                                 }`}
                         >
                             {tab.label}
@@ -34,6 +36,7 @@ function App() {
 
                 {activeTab === 'list' && <ClassroomList />}
                 {activeTab === 'add' && <AddClassroom />}
+                {activeTab === 'allocate' && <AllocateExam />}
             </div>
         </div>
     )

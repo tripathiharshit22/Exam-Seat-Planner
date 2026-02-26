@@ -17,3 +17,14 @@ export const fetchClassrooms = async () => {
     if (!res.ok) throw new Error(json.error || 'Failed to fetch classrooms')
     return json
 }
+
+export const allocateExam = async (totalStudents) => {
+    const res = await fetch(`${API_BASE_URL}/allocate`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ totalStudents }),
+    })
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.error || 'Allocation failed')
+    return json
+}

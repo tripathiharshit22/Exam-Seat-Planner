@@ -12,8 +12,9 @@ function AllocateExam() {
         setError('')
         setResult(null)
 
-        if (totalStudents === '' || Number(totalStudents) < 1) {
-            return setError('Enter a valid number of students')
+        if (totalStudents === '' || isNaN(Number(totalStudents)) ||
+            !Number.isInteger(Number(totalStudents)) || Number(totalStudents) < 1) {
+            return setError('Enter a valid positive whole number')
         }
 
         setLoading(true)

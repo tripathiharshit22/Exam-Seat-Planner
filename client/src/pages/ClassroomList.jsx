@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react'
-import { fetchClassrooms } from '../services/classroomService'
+import { fetchClassrooms, deleteClassroom } from '../services/classroomService'
 
 function ClassroomList() {
     const [classrooms, setClassrooms] = useState([])
     const [error, setError] = useState('')
     const [loading, setLoading] = useState(true)
+    const [deletingId, setDeletingId] = useState(null)
 
     useEffect(() => {
         const load = async () => {
@@ -19,6 +20,18 @@ function ClassroomList() {
         }
         load()
     }, [])
+
+    const handleDelete = async (id) => {
+        setDeletingId(id)
+        try {
+            await deleteClassroom(id)
+            setClassrooms((prev) => prev.filter((r) => r._id !== id))
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setDeletingId(null)
+        }
+    }
 
     if (loading) {
         return <p className="text-sm text-gray-500">Loading classrooms...</p>
@@ -45,6 +58,7 @@ function ClassroomList() {
                                 <th className="px-4 py-3 text-left border-b border-gray-200">Capacity</th>
                                 <th className="px-4 py-3 text-left border-b border-gray-200">Floor No</th>
                                 <th className="px-4 py-3 text-left border-b border-gray-200">Near Washroom</th>
+                                <th className="px-4 py-3 text-left border-b border-gray-200"></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -54,6 +68,15 @@ function ClassroomList() {
                                     <td className="px-4 py-3 text-gray-600">{room.capacity}</td>
                                     <td className="px-4 py-3 text-gray-600">{room.floorNo}</td>
                                     <td className="px-4 py-3 text-gray-600">{room.nearWashroom ? 'Yes' : 'No'}</td>
+                                    <td className="px-4 py-3">
+                                        <button
+                                            onClick={() => handleDelete(room._id)}
+                                            disabled={deletingId === room._id}
+                                            className="text-sm text-red-600 hover:text-red-800 disabled:opacity-40"
+                                        >
+                                            {deletingId === room._id ? 'Deleting...' : 'Delete'}
+                                        </button>
+                                    </td>
                                 </tr>
                             ))}
                         </tbody>

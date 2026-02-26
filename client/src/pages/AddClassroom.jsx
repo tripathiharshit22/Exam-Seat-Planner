@@ -28,8 +28,14 @@ function AddClassroom() {
         if (!form.roomId.trim()) return setError('Room ID is required')
         if (form.capacity === '') return setError('Capacity is required')
         if (form.floorNo === '') return setError('Floor number is required')
-        if (Number(form.capacity) < 1) return setError('Capacity must be at least 1')
-        if (Number(form.floorNo) < 0) return setError('Floor number cannot be negative')
+
+        const cap = Number(form.capacity)
+        const floor = Number(form.floorNo)
+
+        if (isNaN(cap) || !Number.isInteger(cap) || cap < 1)
+            return setError('Capacity must be a positive integer')
+        if (isNaN(floor) || !Number.isInteger(floor) || floor < 0)
+            return setError('Floor number must be a non-negative integer')
 
         setLoading(true)
         try {

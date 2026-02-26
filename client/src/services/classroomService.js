@@ -28,3 +28,12 @@ export const allocateExam = async (totalStudents) => {
     if (!res.ok) throw new Error(json.error || 'Allocation failed')
     return json
 }
+
+export const deleteClassroom = async (id) => {
+    const res = await fetch(`${API_BASE_URL}/classrooms/${id}`, {
+        method: 'DELETE',
+    })
+    const json = await res.json()
+    if (!res.ok) throw new Error(json.error || 'Failed to delete classroom')
+    return json
+}

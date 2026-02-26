@@ -3,6 +3,7 @@ import cors from 'cors'
 import dotenv from 'dotenv'
 import connectDB from './config/db.js'
 import testRoutes from './routes/testRoutes.js'
+import classroomRoutes from './routes/classroomRoutes.js'
 
 dotenv.config()
 
@@ -14,6 +15,7 @@ app.use(cors())
 app.use(express.json())
 
 app.use('/api/test', testRoutes)
+app.use('/api/classrooms', classroomRoutes)
 
 const PORT = process.env.PORT || 5000
 
